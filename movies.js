@@ -17,7 +17,6 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   // Loop through movie list received from TMDB and...
   for (let i = 0; i < movies.length; i++){
     let movie = movies[i]
-    console.log(movie)
     // ...build HTML elements for the movie, 
     moviesElement.insertAdjacentHTML('beforeend', `
       <div id="${movie.id}" class="w-1/4 p-4 movie-${movie.id}">
