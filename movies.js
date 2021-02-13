@@ -70,15 +70,17 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   let watchedCollection = await db.collection('watched').get()
   let watchedDocs = watchedCollection.docs
   console.log(watchedDocs)
-  let watchedData = watchedDocs.data
-  console.log(watchedData)
+  // let watchedData = watchedDocs.data
+  // console.log(watchedData)
   for (i = 0; i < watchedButtons.length; i++) {
     buttonID = watchedButtons[i].parentNode.getAttribute('id')
+    // console.log(watchedCollection.doc('buttonID'))
     // console.log(idStr)
     // let docRef = await db.collection('watched').doc(idStr)
     // opacityFormat = ''
     for (let j = 0; j < watchedDocs.length; j++) {
       movieData = await watchedDocs[j].data()
+      // console.log(movieData)
       // console.log(movieData)
       // console.log(movieData.watched)
       if (buttonID == movieData.id) {
