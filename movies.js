@@ -13,13 +13,11 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   let db = firebase.firestore()
   let watchedCollection = await db.collection('watched').get()
   let watchedDocs = watchedCollection.docs
-  // console.log(watchedDocs)
   // ⬆️ ⬆️ ⬆️ 
   // End Step 1
   
   // Step 2: 
   // ⬇️ ⬇️ ⬇️
-  let idStr = ''
   let moviesElement = document.querySelector('.movies')
   for (let i = 0; i < movieArray.length; i++){
     let movie = movieArray[i]
@@ -31,7 +29,7 @@ window.addEventListener('DOMContentLoaded', async function(event) {
         <a href="#" id="watched-${movie.id}" class="watched-button block text-center text-white bg-green-500 mt-4 mb-2 px-4 py-2 rounded">Saw it!</a>
       </div>
     `)
-    let movieButton = document.querySelector(`#watched-${movie.id}`)
+    let movieButton = document.querySelector(`#watched-${constructingMovieID}`)
     for (let j = 0; j < watchedDocs.length; j++) {
       movieData = watchedDocs[j].data()
       if (constructingMovieID == movieData.id) {
