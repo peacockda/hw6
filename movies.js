@@ -70,6 +70,8 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   let watchedCollection = await db.collection('watched').get()
   let watchedDocs = watchedCollection.docs
   console.log(watchedDocs)
+  let watchedData = watchedDocs.data
+  console.log(watchedData)
   for (i = 0; i < watchedButtons.length; i++) {
     buttonID = watchedButtons[i].parentNode.getAttribute('id')
     // console.log(idStr)
@@ -77,27 +79,13 @@ window.addEventListener('DOMContentLoaded', async function(event) {
     // opacityFormat = ''
     for (let j = 0; j < watchedDocs.length; j++) {
       movieData = await watchedDocs[j].data()
+      // console.log(movieData)
       // console.log(movieData.watched)
       if (buttonID == movieData.id) {
         // console.log(`matched ${buttonID} to ${movieData.id}`)
-        if (movieData.watched == true) {
-          // console.log(`Found a watched movie! ${buttonID}`)
-          // console.log(watchedButtons[i])
-          watchedButtons[i].parentElement.classList.add('opacity-20')
-        } else {
-          // console.log(`Movie ${buttonID} found, but not watched.`)
-        }
+        watchedButtons[i].parentElement.classList.add('opacity-20')
       }
     }
-      // console.log(idStr)
-      // if (movieData.watched == true){
-      //   console.log(`Found a watched movie! ${watchedButtons[i].parentNode.getAttribute('id')}`)
-      //   watchedButtons[i].parentNode.classList.add('opacity-20')
-      // } else {
-      //   console.log(`Movie ${watchedButtons[i].parentNode.getAttribute('id')} found, but not watched.`)
-      // }
-    
-
     watchedButtons[i].addEventListener('click', async function(event){
       event.preventDefault()
       buttonID = event.target.parentNode.getAttribute('id')
@@ -105,10 +93,7 @@ window.addEventListener('DOMContentLoaded', async function(event) {
       // let watchedID = event.target.parentNode.id
       // console.log(watchedID)
       if (event.target.parentNode.classList.contains('opacity-20')){
-        await db.collection('watched').doc(`${buttonID}`).set({
-          watched: false,
-          id: buttonID
-        })
+        await db.collection('watched').doc(`${buttonID}`).delete()
         event.target.parentNode.classList.remove('opacity-20')
         // console.log(`unwatched ${buttonID}`)
       } else {
