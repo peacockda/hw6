@@ -45,11 +45,11 @@ window.addEventListener('DOMContentLoaded', async function(event) {
       // If this div is already transparent, the movie is already watched.
       if (event.target.parentNode.classList.contains('opacity-20')){
         // So delete the associated doc and clear transparency
-        await db.collection('watched').doc(`${watchedToggleID}`).delete()
+        await db.collection('watched').doc(watchedToggleID).delete()
         event.target.parentNode.classList.remove('opacity-20')
       } else {
         // Create a doc and set transparency
-        await db.collection('watched').doc(`${watchedToggleID}`).set({
+        await db.collection('watched').doc(watchedToggleID).set({
           watched: true,
           // Adding the ID to the doc properties makes it easier to find
           // information without calling Firebase more times on load
