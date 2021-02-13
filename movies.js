@@ -1,4 +1,3 @@
-
 window.addEventListener('DOMContentLoaded', async function(event) {
   // TMDB access
   let apiKey = '624b46c7d7c5ca830efc8c74b1303c74'
@@ -21,8 +20,8 @@ window.addEventListener('DOMContentLoaded', async function(event) {
     // ...build HTML elements for the movie, 
     moviesElement.insertAdjacentHTML('beforeend', `
       <div id="${movie.id}" class="w-1/4 p-4 movie-${movie.id}">
-        <img src="https://image.tmdb.org/t/p/w500${movie.backdrop_path}" class="w-full">
-        <div class="title bg-auto font-bold text-white">${movie.title}</div>
+        <a href="https://www.themoviedb.org/movie/${movie.id}" target="_blank" rel="noreferrer noopener"><img src="https://image.tmdb.org/t/p/w500${movie.backdrop_path}" class="w-full">
+        <div class="title bg-auto font-bold text-white text-center">${movie.title}</div></a>
         <a href="#" id="watched-${movie.id}" class="watched-button block text-center text-white bg-green-500 mt-4 mb-2 px-4 py-2 rounded">Saw it!</a>
       </div>
     `)
