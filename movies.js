@@ -38,7 +38,18 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   //   <a href="#" class="watched-button block text-center text-white bg-green-500 mt-4 px-4 py-2 rounded">I've watched this!</a>
   // </div>
   // ⬇️ ⬇️ ⬇️
-
+  for (let i = 0; i < movieArray.length; i++){
+    let movie = movieArray[i]
+    console.log(movie)
+    let moviesElement = document.querySelector('.movies')
+    moviesElement.insertAdjacentHTML('beforeend', `
+      <div class="w-1/4 p-4 movie-${movie.id}">
+        <img src="https://image.tmdb.org/t/p/w500${movie.backdrop_path}" class="w-full">
+        <div class="title bg-auto font-bold text-white">${movie.title}</div>
+        <a href="#" class="watched-button block text-center text-white bg-green-500 mt-4 px-4 py-2 rounded">I've watched this!</a>
+      </div>
+    `)
+  }
   // ⬆️ ⬆️ ⬆️ 
   // End Step 2
 
