@@ -17,7 +17,12 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   // movies. Write the contents of this array to the JavaScript
   // console to ensure you've got good data
   // ⬇️ ⬇️ ⬇️
-
+  let apiKey = '624b46c7d7c5ca830efc8c74b1303c74'
+  let nowPlayingURL = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US`
+  let movieQuerySnapshot = await fetch(nowPlayingURL)
+  let queryJson = await movieQuerySnapshot.json()
+  let movieArray = queryJson.results
+  console.log(movieArray)
   // ⬆️ ⬆️ ⬆️ 
   // End Step 1
   
