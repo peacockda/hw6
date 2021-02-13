@@ -4,7 +4,7 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   let nowPlayingURL = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US`
   let movieQuerySnapshot = await fetch(nowPlayingURL)
   let queryJson = await movieQuerySnapshot.json()
-  let movieArray = queryJson.results
+  let movies = queryJson.results
 
   // Firebase access
   let db = firebase.firestore()
@@ -15,8 +15,9 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   let moviesElement = document.querySelector('.movies')
 
   // Loop through movie list received from TMDB and...
-  for (let i = 0; i < movieArray.length; i++){
-    let movie = movieArray[i]
+  for (let i = 0; i < movies.length; i++){
+    let movie = movies[i]
+    console.log(movie)
     // ...build HTML elements for the movie, 
     moviesElement.insertAdjacentHTML('beforeend', `
       <div id="${movie.id}" class="w-1/4 p-4 movie-${movie.id}">
