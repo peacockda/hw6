@@ -17,6 +17,7 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   // movies. Write the contents of this array to the JavaScript
   // console to ensure you've got good data
   // ⬇️ ⬇️ ⬇️
+  let db = firebase.firestore()
   let apiKey = '624b46c7d7c5ca830efc8c74b1303c74'
   let nowPlayingURL = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US`
   let movieQuerySnapshot = await fetch(nowPlayingURL)
@@ -38,10 +39,11 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   //   <a href="#" class="watched-button block text-center text-white bg-green-500 mt-4 px-4 py-2 rounded">I've watched this!</a>
   // </div>
   // ⬇️ ⬇️ ⬇️
+  let idStr = ''
+  let moviesElement = document.querySelector('.movies')
   for (let i = 0; i < movieArray.length; i++){
     let movie = movieArray[i]
-    // console.log(movie)
-    let moviesElement = document.querySelector('.movies')
+    idStr = String(movie.id)
     moviesElement.insertAdjacentHTML('beforeend', `
       <div id="${movie.id}" class="w-1/4 p-4 movie-${movie.id}">
         <img src="https://image.tmdb.org/t/p/w500${movie.backdrop_path}" class="w-full">
@@ -65,15 +67,57 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   //   to remove the class if the element already contains it.
   // ⬇️ ⬇️ ⬇️
   let watchedButtons = document.querySelectorAll('.watched-button')
-  for (i = 0; i < watchedButtons.length; i++){
+  let watchedCollection = await db.collection('watched').get()
+  let watchedDocs = watchedCollection.docs
+  console.log(watchedDocs)
+  for (i = 0; i < watchedButtons.length; i++) {
+    buttonID = watchedButtons[i].parentNode.getAttribute('id')
+    // console.log(idStr)
+    // let docRef = await db.collection('watched').doc(idStr)
+    // opacityFormat = ''
+    for (let j = 0; j < watchedDocs.length; j++) {
+      movieData = await watchedDocs[j].data()
+      // console.log(movieData.watched)
+      if (buttonID == movieData.id) {
+        // console.log(`matched ${buttonID} to ${movieData.id}`)
+        if (movieData.watched == true) {
+          // console.log(`Found a watched movie! ${buttonID}`)
+          // console.log(watchedButtons[i])
+          watchedButtons[i].parentElement.classList.add('opacity-20')
+        } else {
+          // console.log(`Movie ${buttonID} found, but not watched.`)
+        }
+      }
+    }
+      // console.log(idStr)
+      // if (movieData.watched == true){
+      //   console.log(`Found a watched movie! ${watchedButtons[i].parentNode.getAttribute('id')}`)
+      //   watchedButtons[i].parentNode.classList.add('opacity-20')
+      // } else {
+      //   console.log(`Movie ${watchedButtons[i].parentNode.getAttribute('id')} found, but not watched.`)
+      // }
+    
+
     watchedButtons[i].addEventListener('click', async function(event){
       event.preventDefault()
+      buttonID = event.target.parentNode.getAttribute('id')
+
       // let watchedID = event.target.parentNode.id
       // console.log(watchedID)
       if (event.target.parentNode.classList.contains('opacity-20')){
+        await db.collection('watched').doc(`${buttonID}`).set({
+          watched: false,
+          id: buttonID
+        })
         event.target.parentNode.classList.remove('opacity-20')
+        // console.log(`unwatched ${buttonID}`)
       } else {
+        await db.collection('watched').doc(`${buttonID}`).set({
+          watched: true,
+          id: buttonID
+        })
         event.target.parentNode.classList.add('opacity-20')
+        // console.log(`watched ${buttonID}`)
       }
     })
   }
