@@ -28,7 +28,7 @@ window.addEventListener('DOMContentLoaded', async function(event) {
     // Track the button (and parent div) under construction for status and events
     let movieButton = document.querySelector(`#watched-${movie.id}`)
 
-    // Loop through database of watched movies to see if any match
+    // Loop through array of watched movies to see if any match
     for (let j = 0; j < watchedDocs.length; j++) {
       watchedMovieData = watchedDocs[j].data()
       // If we match, make this movie transparent
