@@ -1,5 +1,5 @@
 window.addEventListener('DOMContentLoaded', async function(event) {
-  // TMDB access
+  // TMDb access
   let apiKey = '624b46c7d7c5ca830efc8c74b1303c74'
   let nowPlayingURL = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US`
   let movieQuerySnapshot = await fetch(nowPlayingURL)
@@ -14,7 +14,7 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   
   let moviesElement = document.querySelector('.movies')
 
-  // Loop through movie list received from TMDB and...
+  // Loop through movie list received from TMDb and...
   for (let i = 0; i < movies.length; i++){
     let movie = movies[i]
     // ...build HTML elements for the movie, 
