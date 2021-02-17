@@ -9,7 +9,7 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   // Firebase access
   let db = firebase.firestore()
   // Pulling the whole collection saves calls to Firebase so page renders faster
-  // These two lines note needed if using Method 1️⃣
+  // These two lines not needed if using Method 1️⃣
   let watchedCollection = await db.collection('watched').get()
   let watchedDocs = watchedCollection.docs
   
@@ -29,7 +29,7 @@ window.addEventListener('DOMContentLoaded', async function(event) {
     // Track the button (and parent div) under construction for status and events
     let movieButton = document.querySelector(`#watched-${movie.id}`)
     
-    // Method 1️⃣ -- More robust
+    // Method 1️⃣
     // Try to pull the document that matches the movie
     // let movieDoc = await db.collection('watched').doc(String(movie.id)).get()
     // let movieCheck = movieDoc.data()
@@ -43,6 +43,7 @@ window.addEventListener('DOMContentLoaded', async function(event) {
     // Method 2️⃣ -- Faster load
     // Loop through array of watched movies to see if any match
     for (let j = 0; j < watchedDocs.length; j++) {
+      // console.log(watchedDocs[j].id)
       watchedMovieData = watchedDocs[j].data()
       if (movie.id == watchedMovieData.id) {
         movieButton.parentElement.classList.add('opacity-20')
